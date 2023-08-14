@@ -19,5 +19,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware'=>'auth:sanctum'], function (){
-    Route::get('/get', \App\Http\Controllers\GetController::class);
+    Route::post("/post", [\App\Http\Controllers\Post\PostController::class, 'store']);
+    Route::post('/post_image', [\App\Http\Controllers\PostImage\PostImageController::class, 'store']);
+    Route::post('/delete_post_image', [\App\Http\Controllers\PostImage\PostImageController::class, 'deletePostImage']);
 });
