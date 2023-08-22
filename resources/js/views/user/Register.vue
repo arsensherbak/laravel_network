@@ -6,15 +6,24 @@
                 <div class="mb-4">
                     <label for="name" class="block text-sm font-medium text-gray-700">Имя:</label>
                     <input type="text" id="name" v-model="name" required class="mt-1 p-2 w-full border rounded-md">
+                    <div v-if="errors">
+                        <p v-for="error in errors.name" class="text-red-800">{{error}}</p>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
                     <input type="email" id="email" v-model="email" required class="mt-1 p-2 w-full border rounded-md">
+                    <div v-if="errors">
+                        <p v-for="error in errors.email" class="text-red-800">{{error}}</p>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="password" class="block text-sm font-medium text-gray-700">Пароль:</label>
                     <input type="password" id="password" v-model="password" required
                            class="mt-1 p-2 w-full border rounded-md">
+                    <div v-if="errors">
+                        <p v-for="error in errors.password" class="text-red-800">{{error}}</p>
+                    </div>
                 </div>
                 <div class="mb-4">
                     <label for="confirmPassword" class="block text-sm font-medium text-gray-700">Подтверждение
@@ -39,7 +48,8 @@ export default {
             email: '',
             password: '',
             password_confirmation: '',
-            errorMessage: ''
+            errorMessage: '',
+            errors: []
         };
     },
     methods: {
@@ -70,8 +80,10 @@ export default {
                     password_confirmation: this.password_confirmation
                 }).then(response => {
                     localStorage.setItem('x_xsrf_token', response.config.headers['X-XSRF-TOKEN'])
-                    this.$router.push({name: 'index'})
+                    this.$router.push({name: 'personal'})
+
                 }).catch(err=>{
+                    this.errors = err.response.data.errors
                     console.log(err.response)
                 })
             });

@@ -33,7 +33,8 @@ export default {
                 axios.post('/login', {email: this.email, password: this.password})
                     .then(response => {
                        localStorage.setItem('x_xsrf_token', response.config.headers['X-XSRF-TOKEN'])
-                        this.$router.push({name: 'index'})
+                        this.$router.push({name: 'personal'})
+
                     }).catch(err => {
                         console.log(err.response)
                 })
